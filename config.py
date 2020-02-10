@@ -4,7 +4,7 @@ from libqtile import layout, bar, widget, hook
 
 from typing import List  # noqa: F401
 from os import getenv, environ, execl
-from subprocess import run, Popen
+from subprocess import run, Popen, PIPE, STDOUT
 
 import widget_custom
 
@@ -31,13 +31,17 @@ def hard_restart(misc):
 
 keys = [
     # Switch between windows in current stack pane
-    Key([mod], "k", lazy.layout.down()),
-    Key([mod], "j", lazy.layout.up()),
+    Key([mod], "Left", lazy.layout.down()),
+    Key([mod], "Right", lazy.layout.up()),
 
     # Move windows up or down in current stack
-    Key([mod, "control"], "k", lazy.layout.shuffle_down()),
-    Key([mod, "control"], "j", lazy.layout.shuffle_up()),
+    Key([mod, "control"], "Left", lazy.layout.shuffle_down()),
+    Key([mod, "control"], "Right", lazy.layout.shuffle_up()),
 
+    # Move windows to another stack
+    Key([mod, "shift"], "Left", lazy.layout.client_to_previous()),
+    Key([mod, "shift"], "Right", lazy.layout.client_to_next()),
+    
     # Switch window focus to other pane(s) of stack
     Key([mod], "Tab", lazy.layout.next()),
 
@@ -131,37 +135,7 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
-
-
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.CurrentLayoutIcon(),
-                widget.GroupBox(hide_unused=True),
-                widget.Prompt(),
-                widget.TaskList(txt_floating="🗗", txt_maximized="🗖", txt_minimized="🗕"),
-                widget.Systray(),
-                widget.Notify(),
-                widget.CheckUpdates(custom_command="apt list --upgradable", execute="sudo -A apt update", display_format="{updates}", colour_have_updates="ff7300", colour_no_updates="5eff00"),
-                widget.Sep(),
-                widget.CPU(format="{load_percent}%"),
-                widget_custom.Memory(),
-                widget.ThermalSensor(tag_sensor="Core 0"),
-                widget.Sep(),
-                widget.Wlan(disconnected_message="", interface="wlp1s0"),
-                widget.Net(format="{down}\u2193\u2191{up}"),
-                widget.Sep(),
-                #widget.BatteryIcon(battery="BATC"),
-                widget.Battery(charge_char="\N{electric plug}", discharge_char="\N{battery}", empty_char="\N{cross mark}", unknown_char="\N{question mark}", battery="BATC", format="{char}{percent:2.0%} {hour:d}:{min:02d}", low_percentage=0.35, hide_threshold=True),
-                widget.Volume(front="material-design-icons-iconfont",emoji=True),
-                widget.Clock(format='%d/%m/%Y %H:%M'),
-            ],
-            24,
-        ),
-    ),
-]
-
+screens = []
 
 # Drag floating layouts.
 mouse = [
@@ -199,7 +173,7 @@ focus_on_window_activation = "smart"
 
 
 @hook.subscribe.client_new
-def func(c):
+def auto_group(c):
     if c.name == "Vivaldi - Vivaldi":
         c.togroup("\N{globe with meridians}")
     elif c.name in ["Discord", "Telegram"]:
@@ -214,7 +188,42 @@ def func(c):
         c.togroup("\N{video game}")
 
 
+@hook.subscribe.screen_change
+def restart_on_randr(qtile, ev):
+    qtile.cmd_restart()
+
+
 def main(q):
+    ps_screens = int(run("xrandr -q | grep ' connected' | wc -l", shell=True, stdout=PIPE).stdout)
+    screens.clear()
+    for i in range(ps_screens):
+        print(1)
+        screens.append(Screen(
+    top=bar.Bar(
+        [
+            widget.CurrentLayoutIcon(),
+            widget.GroupBox(hide_unused=True),
+            widget.Prompt(),
+            widget.TaskList(txt_floating="🗗", txt_maximized="🗖", txt_minimized="🗕"),
+            widget.Systray(),
+            widget.Notify(),
+            widget.CheckUpdates(custom_command="apt list --upgradable", execute="sudo -A apt update", display_format="{updates}", colour_have_updates="ff7300", colour_no_updates="5eff00"),
+            widget.Sep(),
+            widget.CPU(format="{load_percent}%"),
+            widget_custom.Memory(),
+            widget.ThermalSensor(tag_sensor="Core 0"),
+            widget.Sep(),
+            widget.Wlan(disconnected_message="", interface="wlp1s0"),
+            widget.Net(format="{down}\u2193\u2191{up}"),
+            widget.Sep(),
+            #widget.BatteryIcon(battery="BATC"),
+            widget.Battery(charge_char="\N{electric plug}", discharge_char="\N{battery}", empty_char="\N{cross mark}", unknown_char="\N{question mark}", battery="BATC", format="{char}{percent:2.0%} {hour:d}:{min:02d}", low_percentage=0.35, hide_threshold=True),
+            widget.Volume(front="material-design-icons-iconfont",emoji=True),
+            widget.Clock(format='%d/%m/%Y %H:%M'),
+        ],
+        24,
+    )
+))
     Popen(["nextcloud", "--background"])
     Popen("kdeconnect-indicator")
 
