@@ -26,7 +26,7 @@ def cmd_run(prompt, sudo=False):
 
 
 def hard_restart(misc):
-    execl("/opt/qtile/qtile-venv-entry",  " ")
+    execl("/opt/qtile/bin/qtile",  " ")
 
 
 keys = [
@@ -93,13 +93,6 @@ keys = [
     Key([mod, "mod1"], "v", lazy.spawn(f"{exitvenv} vivaldi")),
     Key([mod, "mod1"], "d", lazy.spawn(f"{exitvenv} discord")),
     Key([mod, "mod1"], "t", lazy.spawn(f"{exitvenv} telegram-desktop")),
-
-
-    # Notify
-    Key([mod, "mod1"], "Right", lazy.widget["notify"].next()),
-    Key([mod, "mod1"], "Left", lazy.widget["notify"].prev()),
-    Key([mod, "mod1"], "Down", lazy.widget["notify"].clear()),
-
 ]
 
 
@@ -206,7 +199,6 @@ def main(q):
             widget.Prompt(),
             widget.TaskList(txt_floating="🗗", txt_maximized="🗖", txt_minimized="🗕"),
             widget.Systray(),
-            #widget.Notify(),
             widget.CheckUpdates(custom_command="apt list --upgradable", execute="sudo -A apt update", display_format="{updates}", colour_have_updates="ff7300", colour_no_updates="5eff00"),
             widget.Sep(),
             widget.CPU(format="{load_percent}%"),
@@ -224,9 +216,6 @@ def main(q):
         24,
     )
 ))
-    Popen("/usr/lib/notification-daemon/notification-daemon")
-    Popen(["nextcloud", "--background"])
-    Popen("kdeconnect-indicator")
-
+ 
 wmname = "LG3D"
 
