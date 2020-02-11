@@ -5,8 +5,11 @@ from libqtile import layout, bar, widget, hook
 from typing import List  # noqa: F401
 from os import getenv, environ, execl
 from subprocess import run, Popen, PIPE, STDOUT
+from pathlib import Path
+from datetime import datetime
 
 import widget_custom
+
 
 mod = "mod4"
 newpath = getenv("PATH").replace("/opt/qtile/venv/bin", "")
@@ -23,6 +26,24 @@ def cmd_run(prompt, sudo=False):
         Popen(f"{exitvenv} {args}", shell=True)
 
     prompt.start_input(name, f, "cmd")
+
+
+def screenshot(save=True, copy=True):
+    def f(qtile):
+        path = Path.home() / "Nextcloud" / "Images" / "Screenshots"
+        date = datetime.now()
+        path /= f"Screenshot {date.strftime('%d-%m-%Y %H:%S')}.png"
+        shot = run(["maim"], stdout=PIPE)
+
+        if save:
+            with open(path, "wb") as sc:
+                sc.write(shot.stdout)
+
+        if copy:
+            run(["xclip", "-selection", "clipboard", "-t",
+                            "image/png"], input=shot.stdout)
+    return f
+
 
 
 def hard_restart(misc):
@@ -88,6 +109,11 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 -D default -q set Master 2%-")),
     Key([], "XF86AudioMute", lazy.spawn("amixer -c 0 -D default -q set Master toggle")),
 
+    # Screenshots
+    Key([], "Print", lazy.function(screenshot())),
+    Key(["control"], "Print", lazy.function(save=False)),
+    Key(["shift"], "Print", lazy.function(screenshot(copy=False))),
+
     # Apps
     Key([mod, "mod1"], "k", lazy.spawn(f"{exitvenv} kitty")),
     Key([mod, "mod1"], "v", lazy.spawn(f"{exitvenv} vivaldi")),
@@ -125,7 +151,7 @@ layouts = [
 
 
 widget_defaults = dict(
-    font='sans',
+    font="sans",
     fontsize=12,
     padding=3,
 )
@@ -146,22 +172,22 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
-    {'wmclass': 'confirm'},
-    {'wmclass': 'dialog'},
-    {'wmclass': 'download'},
-    {'wmclass': 'error'},
-    {'wmclass': 'file_progress'},
-    {'wmclass': 'notification'},
-    {'wmclass': 'splash'},
-    {'wmclass': 'toolbar'},
-    {'wmclass': 'confirmreset'},  # gitk
-    {'wmclass': 'makebranch'},  # gitk
-    {'wmclass': 'maketag'},  # gitk
-    {'wname': 'branchdialog'},  # gitk
-    {'wname': 'pinentry'},  # GPG key password entry
-    {'wname': 'Onboard'},
-    {'wname': 'win0'},
-    {'wmclass': 'ssh-askpass'},  # ssh-askpass
+    {"wmclass": "confirm"},
+    {"wmclass": "dialog"},
+    {"wmclass": "download"},
+    {"wmclass": "error"},
+    {"wmclass": "file_progress"},
+    {"wmclass": "notification"},
+    {"wmclass": "splash"},
+    {"wmclass": "toolbar"},
+    {"wmclass": "confirmreset"},  # gitk
+    {"wmclass": "makebranch"},  # gitk
+    {"wmclass": "maketag"},  # gitk
+    {"wname": "branchdialog"},  # gitk
+    {"wname": "pinentry"},  # GPG key password entry
+    {"wname": "Onboard"},
+    {"wname": "win0"},
+    {"wmclass": "ssh-askpass"},  # ssh-askpass
 ])
 
 auto_fullscreen = True
@@ -214,7 +240,7 @@ def main(q):
             #widget.BatteryIcon(battery="BATC"),
             widget.Battery(charge_char="\N{electric plug}", discharge_char="\N{battery}", empty_char="\N{cross mark}", unknown_char="\N{question mark}", battery="BATC", format="{char}{percent:2.0%} {hour:d}:{min:02d}", low_percentage=0.35, hide_threshold=True),
             widget.Volume(front="material-design-icons-iconfont",emoji=True),
-            widget.Clock(format='%d/%m/%Y %H:%M'),
+            widget.Clock(format="%d/%m/%Y %H:%M"),
         ],
         24,
     )
