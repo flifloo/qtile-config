@@ -160,6 +160,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry
     {'wname': 'Onboard'},
+    {'wname': 'win0'},
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
 ])
 
@@ -175,7 +176,7 @@ def auto_group(c):
         c.togroup("\N{incoming envelope}")
     elif c.name == "Typora":
         c.togroup("\N{briefcase}")
-    elif c.name == "win0":
+    elif c.name in ["win0", "DataGrip", "CLion", "IntelliJ IDEA", "PyCharm"]:
         c.togroup("\N{floppy disk}")
     elif c.name == "docs":
         c.togroup("\N{bookmark tabs}")
