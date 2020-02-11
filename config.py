@@ -206,7 +206,7 @@ def main(q):
             widget.Prompt(),
             widget.TaskList(txt_floating="🗗", txt_maximized="🗖", txt_minimized="🗕"),
             widget.Systray(),
-            widget.Notify(),
+            #widget.Notify(),
             widget.CheckUpdates(custom_command="apt list --upgradable", execute="sudo -A apt update", display_format="{updates}", colour_have_updates="ff7300", colour_no_updates="5eff00"),
             widget.Sep(),
             widget.CPU(format="{load_percent}%"),
@@ -224,6 +224,7 @@ def main(q):
         24,
     )
 ))
+    Popen("/usr/lib/notification-daemon/notification-daemon")
     Popen(["nextcloud", "--background"])
     Popen("kdeconnect-indicator")
 
