@@ -13,10 +13,11 @@ def auto_group(c):
         c.togroup("\N{floppy disk}")
     elif c.name == "docs":
         c.togroup("\N{bookmark tabs}")
-    elif c.name in ["Lutris", "Shadow"]:
+    elif c.name in ["Lutris", "Shadow", "Steam"]:
         c.togroup("\N{video game}")
 
 
 @hook.subscribe.screen_change
 def restart_on_randr(qtile, ev):
     qtile.cmd_restart()
+

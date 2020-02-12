@@ -13,3 +13,4 @@ for i in [["F1", "\N{globe with meridians}"], ["F2", "\N{incoming envelope}"], [
         Key([mod], i[0], lazy.group[i[1]].toscreen()),
         Key([mod, "shift"], i[0], lazy.window.togroup(i[1], switch_group=True))
     ])
+

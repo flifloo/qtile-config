@@ -9,7 +9,6 @@ pulseaudio -D
 
 
 feh --bg-fill ~/Nextcloud/Images/Furry/Commis/Kat-LUK.J_/poster_etha.png
-xbrightness 0.5
 
 
 # Fix touchscreen

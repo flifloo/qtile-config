@@ -35,3 +35,4 @@ floating_layout = layout.Floating(float_rules=[
     {"wname": "win0"},
     {"wmclass": "ssh-askpass"},  # ssh-askpass
 ])
+
