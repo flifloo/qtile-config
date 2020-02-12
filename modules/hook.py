@@ -1,4 +1,5 @@
 from libqtile import hook
+from subprocess import run
 
 
 @hook.subscribe.client_new
@@ -19,5 +20,6 @@ def auto_group(c):
 
 @hook.subscribe.screen_change
 def restart_on_randr(qtile, ev):
+    run(["xrandr", "--auto"])
     qtile.cmd_restart()
 

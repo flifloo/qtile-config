@@ -17,7 +17,6 @@ def main(q):
     ps_screens = int(run("xrandr -q | grep ' connected' | wc -l", shell=True, stdout=PIPE).stdout)
     screens.clear()
     for i in range(ps_screens):
-        print(1)
         screens.append(Screen(
             top=bar.Bar(
                 [
