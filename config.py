@@ -2,13 +2,14 @@ from typing import List
 
 from modules.groups import groups
 from modules import hook
-from modules.keys import keys
+from modules.keys import keys, mouse
 from modules.layouts import layouts, floating_layout
 from modules.main import main, screens, widget_defaults
 
 
 groups = groups
 keys = keys
+mouse = mouse
 layouts = layouts
 floating_layout = floating_layout
 main = main
