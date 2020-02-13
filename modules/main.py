@@ -36,7 +36,7 @@ def main(q):
                     widget.Sep(),
                     #widget.BatteryIcon(battery="BATC"),
                     widget.Battery(charge_char="\N{electric plug}", discharge_char="\N{battery}", empty_char="\N{cross mark}", unknown_char="\N{question mark}", battery="BATC", format="{char}{percent:2.0%} {hour:d}:{min:02d}", low_percentage=0.35, hide_threshold=True),
-                    widget.Volume(front="material-design-icons-iconfont",emoji=True),
+                    widget.Volume(emoji=True),
                     widget.Clock(format="%d/%m/%Y %H:%M"),
                 ],
                 24,
