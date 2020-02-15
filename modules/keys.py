@@ -119,6 +119,8 @@ keys = [
     Key([mod, "mod1"], "r", lazy.spawn(f"{exitvenv} kitty --name ranger ranger")),
     Key([mod, "mod1"], "h", lazy.spawn(f"{exitvenv} kitty --name htop htop")),
     Key([mod, "mod1"], "n", lazy.spawn(f"{exitvenv} kitty --name nvim nvim")),
+    Key([mod, "mod1"], "b", lazy.spawn(f"{exitvenv} kitty --name bluetooth bluetoothctl")),
+    Key([mod, "mod1"], "w", lazy.spawn(f"{exitvenv} kitty --name Network-Manager nmtui")),
 ]
 
 mouse = [
