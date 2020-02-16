@@ -14,7 +14,7 @@ def auto_group(c):
         c.togroup("\N{floppy disk}")
     elif c.name == "docs":
         c.togroup("\N{bookmark tabs}")
-    elif c.name in ["Lutris", "Shadow", "Steam"]:
+    elif c.name in ["Lutris", "Shadow", "Steam"] or c.name[:9] == "Minecraft":
         c.togroup("\N{video game}")
 
 
