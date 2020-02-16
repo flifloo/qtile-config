@@ -116,6 +116,7 @@ keys = [
     Key([mod, "mod1"], "v", lazy.spawn(f"{exitvenv} vivaldi")),
     Key([mod, "mod1"], "d", lazy.spawn(f"{exitvenv} discord")),
     Key([mod, "mod1"], "t", lazy.spawn(f"{exitvenv} telegram-desktop")),
+    Key([mod, "mod1"], "m", lazy.spawn(f"{exitvenv} mailspring")),
     Key([mod, "mod1"], "r", lazy.spawn(f"{exitvenv} kitty --name ranger ranger")),
     Key([mod, "mod1"], "h", lazy.spawn(f"{exitvenv} kitty --name htop htop")),
     Key([mod, "mod1"], "n", lazy.spawn(f"{exitvenv} kitty --name nvim nvim")),

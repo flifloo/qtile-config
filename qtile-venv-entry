@@ -28,6 +28,7 @@ xinput set-prop $touchpadid $disablewhiletypingid 0
 
 nextcloud --background &
 kdeconnect-indicator &
+mailspring -b &
 
 
 source /opt/qtile/venv/bin/activate
