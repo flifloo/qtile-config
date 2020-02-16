@@ -4,7 +4,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 
 picom --vsync --backend glx -b
-pulseaudio -D
 /usr/lib/notification-daemon/notification-daemon &
 
 
