@@ -32,5 +32,5 @@ mailspring -b &
 
 
 source /opt/qtile/venv/bin/activate
-python /opt/qtile/bin/qtile $* > /opt/qtile/qtile.log
+python /opt/qtile/bin/qtile $*
 
